@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import Home from "./Home.jsx";
 import Order from "./Order.jsx";
 import Layout from "./Layout.jsx";
-
+import Cart from "./Cart.jsx";
 import {
   RouterProvider,
   Route,
@@ -16,6 +16,7 @@ const router = createBrowserRouter(
     <Route path="/" element={<Layout />}>
       <Route path="" element={<Home />} />
       <Route path="food" element={<Order />} />
+      <Route path="food/my-cart" element={<Cart />} />
     </Route>
   )
 );

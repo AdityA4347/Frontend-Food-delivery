@@ -1,7 +1,9 @@
 import styled from "styled-components";
 import { BASE_URL, Button, Container } from "../../App";
+import { FaCartArrowDown } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 
-const SearchResult = ({ data }) => {
+const SearchResult = ({ data, handelClick }) => {
   return (
     <FoodCardContainer>
       <Container>
@@ -16,7 +18,12 @@ const SearchResult = ({ data }) => {
                   <h3>{name}</h3>
                   <p>{text}</p>
                 </div>
-                <Button>${price.toFixed(2)}</Button>
+                <div className="cart-price-buttons">
+                  <Button onClick={() => handelClick(name, image)}>
+                    <FaCartArrowDown></FaCartArrowDown>
+                  </Button>
+                  <Button>${price.toFixed(2)}</Button>
+                </div>
               </div>
             </FoodCard>
           ))}
@@ -28,7 +35,7 @@ const SearchResult = ({ data }) => {
 
 export default SearchResult;
 
-const FoodCardContainer = styled.section`
+export const FoodCardContainer = styled.section`
   min-height: calc(100vh - 210px);
   width: 100%;
   background-image: url("/bg.png");
@@ -77,5 +84,10 @@ const FoodCard = styled.section`
   }
   button {
     font-size: 12px;
+  }
+  .cart-price-buttons {
+    gap: 5px;
+    display: flex;
+    direction: column;
   }
 `;

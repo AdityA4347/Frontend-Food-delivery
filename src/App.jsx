@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import SearchResult from "./components/SearchResult/SearchResult";
 import fooddata from "./data.json";
+import { Link } from "react-router-dom";
+import { FaCartArrowDown } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom";
 
 export const BASE_URL = "http://localhost:9000";
 
@@ -11,6 +14,8 @@ const App = () => {
   const [error, setError] = useState(null);
   const [filteredData, setFilteredData] = useState(null);
   const [selectedBtn, setSelectedBtn] = useState("all");
+  const [cartdata, setCartdata] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     // const fetchFoodData = async () => {
@@ -29,8 +34,6 @@ const App = () => {
     setData(fooddata);
     setFilteredData(fooddata);
   }, []);
-
-  console.log(data);
 
   const searchFood = (e) => {
     const searchValue = e.target.value;
@@ -57,6 +60,15 @@ const App = () => {
     setSelectedBtn(type);
   };
 
+  const handelClick = (name, img) => {
+    let newObj = { name: name, image: img };
+    setCartdata([...cartdata, newObj]);
+  };
+  console.log(cartdata);
+  function handelsubmit() {
+    navigate("my-cart", { state: { data: cartdata } });
+  }
+
   return (
     <>
       <Container>
@@ -66,6 +78,10 @@ const App = () => {
           </div>
           <div className="search">
             <input onChange={searchFood} placeholder="Search Food" />
+
+            <Cartbutton className="cart-button" onClick={handelsubmit}>
+              <FaCartArrowDown></FaCartArrowDown>
+            </Cartbutton>
           </div>
         </TopContainer>
         <FilterContainer>
@@ -75,7 +91,7 @@ const App = () => {
           <Button onClick={() => filteredFood("Dinner")}>Dinner</Button>
         </FilterContainer>
       </Container>
-      <SearchResult data={filteredData} />
+      <SearchResult data={filteredData} handelClick={handelClick} />
     </>
   );
 };
@@ -85,14 +101,21 @@ export const Container = styled.div`
   max-width: 1200px;
   margin: 0 auto;
 `;
-const TopContainer = styled.section`
+export const TopContainer = styled.section`
   min-height: 140px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 16px;
-
+  .my-food {
+    font-size: 30px;
+    display: flex;
+    gap: 3px;
+  }
   .search {
+    display: flex;
+    align-items: center;
+    gap: 10px;
     input {
       background-color: transparent;
       border: 1px solid red;
@@ -109,6 +132,18 @@ const FilterContainer = styled.section`
   justify-content: center;
   gap: 12px;
   padding-bottom: 40px;
+`;
+const Cartbutton = styled.button`
+  padding: 6px 12px;
+  border-radius: 5px;
+  background: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+  &:hover {
+    background-color: #da0d0d;
+  }
+  font-size: 25px;
 `;
 export const Button = styled.button`
   padding: 6px 12px;
