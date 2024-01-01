@@ -2,9 +2,12 @@ import React from "react";
 import styled from "styled-components";
 import { createGlobalStyle } from "styled-components";
 import { FoodCardContainer } from "./components/SearchResult/SearchResult";
-import { Container, TopContainer } from "./App";
+import { Button, Container, TopContainer } from "./App";
 import { FaCartArrowDown } from "react-icons/fa6";
 import { useLocation } from "react-router-dom";
+import Cartitems from "./Cartitems";
+import { IoArrowBack } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
 
 const GlobalStyle = createGlobalStyle`
   *{
@@ -22,7 +25,10 @@ const GlobalStyle = createGlobalStyle`
 const Cart = () => {
   const { state } = useLocation();
   const data = state;
-  console.log(data);
+  const navigate = useNavigate();
+  const goBack = () => {
+    navigate(-1); // This will go back to the previous page
+  };
   return (
     <React.StrictMode>
       <GlobalStyle />
@@ -37,12 +43,25 @@ const Cart = () => {
           </div>
         </TopContainer>
       </Container>
-      <CartCardContainer></CartCardContainer>
+      <CartCardContainer>
+        <Cartitems data={data} />
+        <Back>
+          <Button onClick={goBack}>
+            <IoArrowBack />
+            Back
+          </Button>
+        </Back>
+      </CartCardContainer>
     </React.StrictMode>
   );
 };
 
 export default Cart;
+const Back = styled.section`
+  display: flex;
+  align-items: center;
+  padding-left: 4%;
+`;
 
 const CartCardContainer = styled.section`
   min-height: calc(100vh - 140px);
