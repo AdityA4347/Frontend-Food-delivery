@@ -19,7 +19,7 @@ const SearchResult = ({ data, handelClick }) => {
                   <p>{text}</p>
                 </div>
                 <div className="cart-price-buttons">
-                  <Button onClick={() => handelClick(name, image)}>
+                  <Button onClick={() => handelClick(name, image, price)}>
                     <FaCartArrowDown></FaCartArrowDown>
                   </Button>
                   <Button>${price.toFixed(2)}</Button>
@@ -40,6 +40,12 @@ export const FoodCardContainer = styled.section`
   width: 100%;
   background-image: url("/bg.png");
   background-size: cover;
+  .clear-button {
+    padding-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 const FoodCards = styled.section`
   display: flex;

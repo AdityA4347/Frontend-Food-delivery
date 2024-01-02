@@ -16,7 +16,6 @@ const router = createBrowserRouter(
     <Route path="/" element={<Layout />}>
       <Route path="" element={<Home />} />
       <Route path="food" element={<Order />} />
-      <Route path="food/my-cart" element={<Cart />} />
     </Route>
   )
 );
