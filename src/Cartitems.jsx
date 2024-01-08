@@ -2,9 +2,14 @@ import React from "react";
 import styled from "styled-components";
 import { FoodCardContainer } from "./components/SearchResult/SearchResult";
 import { Container } from "./App";
+import { MdDelete } from "react-icons/md";
+import { useDispatch } from "react-redux";
+import { removeItem } from "./features/cartSlice";
+import { Button } from "./App";
 
 const Cartitems = (props) => {
   const { data } = props;
+  const dispatch = useDispatch();
   return (
     <FoodCardContainer>
       <Cartcontainer>
@@ -12,8 +17,19 @@ const Cartitems = (props) => {
           <p className="heading">In Cart</p>
           {data.map((item) => (
             <Cartcard key={item.name}>
-              <img className="cart-food-image" src={item.image} alt="" />
-              <p>{item.name}</p>
+              <div className="item-info">
+                <img className="cart-food-image" src={item.image} alt="" />
+                <p>{item.name}</p>
+              </div>
+              <div className="delete-icon">
+                <Button
+                  onClick={() => {
+                    dispatch(removeItem(item.id));
+                  }}
+                >
+                  <MdDelete />
+                </Button>
+              </div>
             </Cartcard>
           ))}
         </Cartfood>
@@ -28,6 +44,14 @@ const Cartcontainer = styled.section`
   justify-content: center;
 `;
 const Cartfood = styled.section`
+  .item-info {
+    display: flex;
+    align-items: center;
+  }
+  .delete-icon {
+    margin-right: 10px;
+    color: #ff4343;
+  }
   .heading {
     display: flex;
     justify-content: center;
@@ -47,7 +71,7 @@ const Cartcard = styled.section`
   }
   display: flex;
   align-items: center;
-  gap: 10px;
+  justify-content: space-between;
   width: 350px;
   height: 50px;
   border-radius: 20px;

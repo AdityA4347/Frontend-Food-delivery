@@ -5,7 +5,8 @@
       "text": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
       "image": "/images/egg.png",
       "type": "breakfast",
-      "id":1
+      "id":1,
+      "quantity":1
     },
     {
       "name": "RAMEN",
@@ -13,7 +14,8 @@
       "text": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
       "image": "/images/ramen.png",
       "type": "lunch",
-      "id":2
+      "id":2,
+      "quantity":1
     },
     {
       "name": "GRILLED CHICKEN",
@@ -21,7 +23,8 @@
       "text": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
       "image": "/images/chicken.png",
       "type": "dinner",
-      "id":3
+      "id":3,
+      "quantity":1
     },
     {
       "name": "CAKE",
@@ -29,7 +32,8 @@
       "text": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
       "image": "/images/cake.png",
       "type": "breakfast",
-      "id":4
+      "id":4,
+      "quantity":1
     },
     {
       "name": "BURGER",
@@ -37,7 +41,8 @@
       "text": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
       "image": "/images/burger.png",
       "type": "lunch",
-      "id":5
+      "id":5,
+      "quantity":1
     },
     {
       "name": "PANCAKE",
@@ -45,6 +50,7 @@
       "text": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
       "image": "/images/pancake.png",
       "type": "dinner",
-      "id":6
+      "id":6,
+      "quantity":1
     }
 ]
