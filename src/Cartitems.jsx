@@ -10,7 +10,7 @@ const Cartitems = (props) => {
       <Cartcontainer>
         <Cartfood>
           <p className="heading">In Cart</p>
-          {data.data.map((item) => (
+          {data.map((item) => (
             <Cartcard key={item.name}>
               <img className="cart-food-image" src={item.image} alt="" />
               <p>{item.name}</p>

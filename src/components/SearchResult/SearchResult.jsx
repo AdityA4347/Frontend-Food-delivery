@@ -2,27 +2,30 @@ import styled from "styled-components";
 import { BASE_URL, Button, Container } from "../../App";
 import { FaCartArrowDown } from "react-icons/fa6";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../features/cartSlice";
 
-const SearchResult = ({ data, handelClick }) => {
+const SearchResult = ({ data }) => {
+  const dispatch = useDispatch();
   return (
     <FoodCardContainer>
       <Container>
         <FoodCards>
-          {data?.map(({ name, image, text, price }) => (
-            <FoodCard key={name}>
+          {data?.map((item) => (
+            <FoodCard key={item.id}>
               <div className="food_image">
-                <img src={image} alt="" />
+                <img src={item.image} alt="" />
               </div>
               <div className="food_info">
                 <div className="info">
-                  <h3>{name}</h3>
-                  <p>{text}</p>
+                  <h3>{item.name}</h3>
+                  <p>{item.text}</p>
                 </div>
                 <div className="cart-price-buttons">
-                  <Button onClick={() => handelClick(name, image, price)}>
+                  <Button onClick={() => dispatch(addToCart(item))}>
                     <FaCartArrowDown></FaCartArrowDown>
                   </Button>
-                  <Button>${price.toFixed(2)}</Button>
+                  <Button>${item.price.toFixed(2)}</Button>
                 </div>
               </div>
             </FoodCard>
@@ -40,12 +43,6 @@ export const FoodCardContainer = styled.section`
   width: 100%;
   background-image: url("/bg.png");
   background-size: cover;
-  .clear-button {
-    padding-top: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
 `;
 const FoodCards = styled.section`
   display: flex;

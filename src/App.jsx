@@ -1,12 +1,10 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import SearchResult from "./components/SearchResult/SearchResult";
 import fooddata from "./data.json";
 import { Link } from "react-router-dom";
 import { FaCartArrowDown } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
-import Cart from "./Cart";
-import { IoArrowBack } from "react-icons/io5";
 
 export const BASE_URL = "http://localhost:9000";
 
@@ -18,7 +16,6 @@ const App = () => {
   const [selectedBtn, setSelectedBtn] = useState("all");
   const [cartdata, setCartdata] = useState([]);
   const navigate = useNavigate();
-  const [show, setShow] = useState(false);
 
   useEffect(() => {
     // const fetchFoodData = async () => {
@@ -63,69 +60,43 @@ const App = () => {
     setSelectedBtn(type);
   };
 
-  const handelClick = (name, img, price) => {
-    let newObj = { name: name, image: img, price: price };
+  const handelClick = (name, img) => {
+    let newObj = { name: name, image: img };
     setCartdata([...cartdata, newObj]);
   };
-
   console.log(cartdata);
+  function handelsubmit() {
+    navigate("my-cart", { state: { data: cartdata } });
+  }
 
   return (
     <>
-      {show ? (
-        <>
-          <Cart data={cartdata} setShow={setShow} />
+      <Container>
+        <TopContainer>
+          <div className="logo">
+            <img src="/logo.svg" alt="logo" />
+          </div>
+          <div className="search">
+            <input onChange={searchFood} placeholder="Search Food" />
 
-          <Back>
-            <Button onClick={() => setShow(false)}>
-              <IoArrowBack />
-              Back
-            </Button>
-          </Back>
-        </>
-      ) : (
-        <>
-          <Container>
-            <TopContainer>
-              <div className="logo">
-                <img src="/logo.svg" alt="logo" />
-              </div>
-              <div className="search">
-                <input onChange={searchFood} placeholder="Search Food" />
-
-                <Cartbutton
-                  className="cart-button"
-                  onClick={() => setShow(true)}
-                >
-                  <FaCartArrowDown></FaCartArrowDown>
-                </Cartbutton>
-              </div>
-            </TopContainer>
-            <FilterContainer>
-              <Button onClick={() => filteredFood("all")}>All</Button>
-              <Button onClick={() => filteredFood("breakfast")}>
-                Breakfast
-              </Button>
-              <Button onClick={() => filteredFood("lunch")}>Lunch</Button>
-              <Button onClick={() => filteredFood("Dinner")}>Dinner</Button>
-            </FilterContainer>
-          </Container>
-          <SearchResult data={filteredData} handelClick={handelClick} />
-        </>
-      )}
+            <Cartbutton className="cart-button" onClick={handelsubmit}>
+              <FaCartArrowDown></FaCartArrowDown>
+            </Cartbutton>
+          </div>
+        </TopContainer>
+        <FilterContainer>
+          <Button onClick={() => filteredFood("all")}>All</Button>
+          <Button onClick={() => filteredFood("breakfast")}>Breakfast</Button>
+          <Button onClick={() => filteredFood("lunch")}>Lunch</Button>
+          <Button onClick={() => filteredFood("Dinner")}>Dinner</Button>
+        </FilterContainer>
+      </Container>
+      <SearchResult data={filteredData} />
     </>
   );
 };
 
 export default App;
-const Back = styled.section`
-  position: absolute;
-  display: flex;
-  align-items: center;
-  top: 90%;
-  padding-left: 3%;
-`;
-
 export const Container = styled.div`
   max-width: 1200px;
   margin: 0 auto;
