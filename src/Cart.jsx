@@ -36,9 +36,7 @@ const Cart = () => {
   const goBack = () => {
     navigate(-1); // This will go back to the previous page
   };
-  const { cart, totalQuantity, totalPrice } = useSelector(
-    (state) => state.allCart
-  );
+  const { cart } = useSelector((state) => state.allCart);
   console.log(cart);
   return (
     <React.StrictMode>
@@ -56,6 +54,7 @@ const Cart = () => {
       </Container>
       <CartCardContainer>
         <Cartitems data={cart} />
+
         <Back>
           <Button onClick={goBack}>
             <IoArrowBack />

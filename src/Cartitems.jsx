@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { FoodCardContainer } from "./components/SearchResult/SearchResult";
 import { Container } from "./App";
@@ -6,10 +6,31 @@ import { MdDelete } from "react-icons/md";
 import { useDispatch } from "react-redux";
 import { removeItem } from "./features/cartSlice";
 import { Button } from "./App";
+import Summary from "./Summary";
+import {
+  increaseItemQuantity,
+  decreaseItemQuantity,
+} from "./features/cartSlice";
+import { getCartTotal } from "./features/cartSlice";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
 
 const Cartitems = (props) => {
   const { data } = props;
   const dispatch = useDispatch();
+  const { cart, totalQuantity, totalPrice, itemTotal } = useSelector(
+    (state) => state.allCart
+  );
+  const [showtotalprice, setShowtotalprice] = useState(true);
+  useEffect(() => {
+    dispatch(getCartTotal());
+    if (cart.length === 0) {
+      setShowtotalprice(false);
+    } else {
+      setShowtotalprice(true);
+    }
+  }, [cart]);
+
   return (
     <FoodCardContainer>
       <Cartcontainer>
@@ -21,6 +42,31 @@ const Cartitems = (props) => {
                 <img className="cart-food-image" src={item.image} alt="" />
                 <p>{item.name}</p>
               </div>
+              <div class="quantity-container">
+                <button
+                  class="quantity-btn"
+                  onClick={() => {
+                    dispatch(decreaseItemQuantity(item.id));
+                  }}
+                >
+                  -
+                </button>
+                <input
+                  type="text"
+                  class="quantity-input"
+                  value={item.quantity}
+                  readonly
+                />
+                <button
+                  class="quantity-btn"
+                  onClick={() => {
+                    dispatch(increaseItemQuantity(item.id));
+                  }}
+                >
+                  +
+                </button>
+              </div>
+              <div>₹{item.price}</div>
               <div className="delete-icon">
                 <Button
                   onClick={() => {
@@ -34,6 +80,11 @@ const Cartitems = (props) => {
           ))}
         </Cartfood>
       </Cartcontainer>
+      {showtotalprice ? (
+        <Summary quantity={totalQuantity} price={totalPrice} />
+      ) : (
+        <></>
+      )}
     </FoodCardContainer>
   );
 };
@@ -66,6 +117,34 @@ const Cartfood = styled.section`
   padding-top: 80px;
 `;
 const Cartcard = styled.section`
+  .quantity-container {
+    display: flex;
+    align-items: center;
+  }
+  .quantity-input {
+    height: 20px;
+    width: 29px;
+    text-align: center;
+    font-size: 10px;
+    border: 1px solid #3498db;
+    border-radius: 4px;
+    caret-color: transparent;
+    padding: 8px;
+    outline: none;
+  }
+
+  .quantity-btn {
+    height: 20px;
+    width: 20px;
+    text-align: center;
+    cursor: pointer;
+    background-color: #ff4343;
+    color: #fff;
+    border: 1px solid #ff4343;
+    border-radius: 4px;
+    margin: 0 5px;
+    transition: background-color 0.3s ease;
+  }
   .cart-food-image {
     height: 45px;
   }
